@@ -10,6 +10,10 @@ public class BitCodeFile extends BitCodePart {
         add("Offset",  new U32());
         add("Size",    new U32());
         add("CPUType", new U32());
+
+        // LLVM IR Magic
+        add("LLVM IR Magic", new U32()); // TODO
+        add("Block", new Block()); // TODO
     }
 
 //
