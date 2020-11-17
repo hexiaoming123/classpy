@@ -18,6 +18,9 @@ public abstract class FixedInt<R extends BytesReader> extends ReadableFilePart<R
     public final long getValue() {
         return value;
     }
+    public final int getIntValue() {
+        return (int) value;
+    }
 
     @Override
     protected final void readContent(R reader) {

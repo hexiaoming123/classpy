@@ -21,6 +21,11 @@ public class BitCodeReader extends BytesReader {
         bitsInCurWord += 32;
     }
 
+    public void align32bits() {
+        curWord = 0;
+        bitsInCurWord = 0;
+    }
+
     // https://llvm.org/docs/BitCodeFormat.html#fixed-width-value
     public long readFixed(int numBits) {
         if (numBits < 0 || numBits > 32) {
@@ -29,8 +34,8 @@ public class BitCodeReader extends BytesReader {
         if (bitsInCurWord < numBits) {
             readNextWord();
         }
-        System.out.printf("readFixed, numBits=%d, curWord=%x, bitsInCurWord=%d\n",
-                numBits, curWord, bitsInCurWord);
+//        System.out.printf("readFixed, numBits=%d, curWord=%x, bitsInCurWord=%d\n",
+//                numBits, curWord, bitsInCurWord);
         long x = curWord & ~(-1 << numBits);
         curWord >>>= numBits;
         bitsInCurWord -= numBits;
