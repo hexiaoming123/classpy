@@ -1,5 +1,7 @@
 package com.github.zxh.classpy.llvm.bitcode;
 
+import com.github.zxh.classpy.llvm.bitcode.types.U32Hex;
+
 // https://llvm.org/docs/BitCodeFormat.html
 public class BitCodeFile extends BitCodePart {
 
@@ -9,7 +11,7 @@ public class BitCodeFile extends BitCodePart {
         wrapper.read(reader);
         add("Wrapper", wrapper);
 
-        U32 magic = new U32();
+        U32Hex magic = new U32Hex();
         magic.read(reader);
         add("LLVM IR Magic", magic);
 

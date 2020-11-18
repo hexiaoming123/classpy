@@ -2,6 +2,7 @@ package com.github.zxh.classpy.llvm.bitcode;
 
 import com.github.zxh.classpy.common.ParseException;
 import com.github.zxh.classpy.llvm.bitcode.blocks.ModuleBlock;
+import com.github.zxh.classpy.llvm.bitcode.types.U32Dec;
 
 // https://llvm.org/docs/BitCodeFormat.html#enter-subblock
 // [ENTER_SUBBLOCK, blockidvbr8, newabbrevlenvbr4, <align32bits>, blocklen_32]
@@ -23,20 +24,21 @@ public class Block extends BitCodePart {
         long newAbbrevLen = reader.readVBR(4);
         reader.align32bits();
 
-        U32 blockLen = new U32();
+        U32Dec blockLen = new U32Dec();
         add("blockLen", blockLen);
         blockLen.read(reader);
-        System.out.println(blockLen.getValue());
 
         setName(getBlockName(blockID));
-        readBlock(reader, blockID, blockLen.getIntValue());
+        setDesc(String.format("id=%d, newAbbrevLen=%d, blockLen=%d",
+                blockID, newAbbrevLen, blockLen.getValue()));
+        readBlock(reader, blockID, newAbbrevLen, blockLen.getIntValue());
     }
 
     // TODO
-    private void readBlock(BitCodeReader reader, long blockID, int blockLen) {
+    private void readBlock(BitCodeReader reader, long blockID, long abbrevLen, int blockLen) {
         int p1 = reader.getPosition();
         if (blockID == BlockIDs.MODULE_BLOCK_ID.getValue()) {
-            ModuleBlock.read(this, reader);
+            ModuleBlock.read(this, reader, (int) abbrevLen);
         }
         int p2 = reader.getPosition();
         reader.skipBytes(blockLen * 4 - (p2 - p1));

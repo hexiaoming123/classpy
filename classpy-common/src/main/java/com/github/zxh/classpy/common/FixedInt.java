@@ -34,10 +34,10 @@ public abstract class FixedInt<R extends BytesReader> extends ReadableFilePart<R
             case I64, U64 -> reader.readFixedI64();
         };
         switch (intDesc) {
-            case Dec: setDesc(isUnsigned()
+            case Dec -> setDesc(isUnsigned()
                     ? Long.toUnsignedString(value)
                     : Long.toString(value));
-            case Hex: setDesc("0x" + Long.toHexString(value).toUpperCase());
+            case Hex -> setDesc("0x" + Long.toHexString(value).toUpperCase());
         }
     }
 
