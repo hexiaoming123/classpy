@@ -1,4 +1,4 @@
-package com.github.zxh.classpy.llvm.bitcode;
+package com.github.zxh.classpy.llvm.bitcode.enums;
 
 public enum BlockIDs {
 

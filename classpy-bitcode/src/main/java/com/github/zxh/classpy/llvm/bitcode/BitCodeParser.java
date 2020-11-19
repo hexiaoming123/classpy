@@ -8,9 +8,11 @@ public class BitCodeParser implements FileParser {
     @Override
     public BitCodeFile parse(byte[] data) {
         BitCodeFile bcf = new BitCodeFile();
-        bcf.read(new BitCodeReader(data));
-//        bcf.
-
+        try {
+            bcf.read(new BitCodeReader(data));
+        } catch (Exception e) {
+            e.printStackTrace(System.err);
+        }
         return bcf;
     }
 
